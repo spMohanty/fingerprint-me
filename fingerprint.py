@@ -48,8 +48,8 @@ for _MODE in MODES:
         from keras.applications.vgg16 import preprocess_input
         print "Initializing VGG16"
     elif _MODE == "VGG19":
-        from keras.applications.vgg16 import VGG16 as _BASE_MODEL
-        from keras.applications.vgg16 import preprocess_input
+        from keras.applications.vgg19 import VGG16 as _BASE_MODEL
+        from keras.applications.vgg19 import preprocess_input
         print "Initializing VGG19"
     elif _MODE == "ResNet50":
         from keras.applications.resnet50 import ResNet50 as _BASE_MODEL
