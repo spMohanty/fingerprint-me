@@ -6,8 +6,8 @@ import deepdish as dd
 import glob
 import random
 
-INPUT_DIR_PATH = "/mount/SDB/paper-data/output"
-AGGREGATED_OUTPUT_PATH = "/mount/SDB/paper-data/output-aggregated"
+INPUT_DIR_PATH = "/mount/SDC/paper-data/output"
+AGGREGATED_OUTPUT_PATH = "/mount/SDC/paper-data/output-aggregated"
 
 SIZE = (256, 256)
 labels_dict = {}
@@ -25,12 +25,13 @@ def preprocess(inputdir, outputdir, train_percent, isSmall):
         DENSE_LABELS = []
         FILENAMES = []
         #Iterate over the Input Directory's train/validate folder to collect the images
-        target_files = glob.glob(inputdir+"/*/*/ResNet50.h5")
+        #target_files = glob.glob(inputdir+"/*/*/ResNet50.h5")
+        target_files = glob.glob(inputdir+"/*/*/InceptionV3.h5")
         random.shuffle(target_files)
         for idx, _file in enumerate(target_files):
             print _file
             data = dd.io.load(_file)
-            data = data.flatten()
+            data = np.mean(data, axis=(0,1)) # Leading to (5,5, 2048) -> (2048, 1)
             _label = _file.split("/")[-3]
             try:
                 foo = labels_dict[_label]
@@ -59,14 +60,14 @@ def preprocess(inputdir, outputdir, train_percent, isSmall):
     else:
         dd.io.save(outputdir+"/train.h5", TRAIN_DATA)
         dd.io.save(outputdir+"/validation.h5", VALIDATION_DATA)
-
+    dd.io.save(outputdir+"/labels-dict.h5", labels_dict)
 
 import sys, getopt
 
 def main(argv):
    inputdir = None
    outputdir = None
-   isSmall = True
+   isSmall = False
    train_percent = 0.8
    # try:
    #    opts, args = getopt.getopt(argv,"hd:o:",["input_directory=", "output_directory="])
