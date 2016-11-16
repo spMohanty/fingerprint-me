@@ -17,8 +17,8 @@ For all valid image files within the INPUT_DIR_PATH,
 a corresponding h5 file is created in the output folder containing
 the bottleneck fingerprints of different pretrained models.
 """
-INPUT_DIR_PATH = "/mount/SDC/paper-data/color"
-OUTPUT_DIR_PATH = "/mount/SDC/paper-data/output"
+INPUT_DIR_PATH = "/mount/SDB/paper-data/color"
+OUTPUT_DIR_PATH = "/mount/SDB/paper-data/output"
 
 MODES = ["InceptionV3", "VGG16", "VGG19","ResNet50"]
 BATCH_SIZE = {
